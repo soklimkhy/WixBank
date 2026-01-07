@@ -1,0 +1,56 @@
+for this Microservice Project is :
+Frontend : React.tsx + Tailwind CSS + Shadcn, 
+Backend : Django + Django REST Framework, 
+Database : PostgreSQL cloud database (https://aiven.io/free-mysql-database), 
+Exchange Rates : exchangerate-api.com + Celery tasks is good, 
+Monitoring : Sentry + Prometheus (idk what is this or maybe its new to me), 
+and for Payments : idk if i should use Stripe API or not because im doing in
+demo project which is final thesis school project.
+
+
+Act as a Senior Software Architect and Full Stack Developer. I am building my final year university thesis: a "P2P Currency Exchange Platform" (similar to a crypto exchange but for fiat currency).
+
+**Project Architecture:**
+- **Architecture Style:** Decoupled (REST API Backend + SPA Frontend).
+
+
+**Tech Stack:**
+1.  **Frontend:** React (TypeScript) + Vite.
+    -   **UI Library:** Shadcn/UI + Tailwind CSS.
+    -   **State Management:** React Query (TanStack Query) for API fetching.
+2.  **Backend:** Python Django + Django REST Framework (DRF).
+    -   **Authentication:** JWT (SimpleJWT).
+    -   **Asynchronous Tasks:** Celery + Redis (for fetching external exchange rates).
+3.  **Database:** PostgreSQL (hosted on Aiven).
+4.  **External Data:** Fetch real-world rates from exchangerate-api.com every hour via Celery.
+5.  **Monitoring:** Sentry (for errors) + Prometheus (for metrics).
+
+**Core Business Logic (The "Thesis" Features):**
+1.  **No Real Money:** This is a simulation. Users have "Wallets" with "Demo Money".
+2.  **Faucet:** A feature allowing users to "Deposit" fake money (e.g., click a button to get $1,000 USD or 4,000,000 KHR) to test the system.
+3.  **P2P Order Book (Matching Engine):**
+    -   Users can place "Limit Orders" (e.g., "Sell 100 USD at 4050 KHR").
+    -   Other users can "Buy" these orders.
+    -   The system must handle atomic transactions (database locking) so two users cannot buy the same order at once.
+4.  **Dashboard:** Users can see their Wallet Balance and Active Orders.
+
+**Your Task:**
+Please help me initialize this project structure and core logic.
+
+**Step 1: Database Schema**
+Provide the Django `models.py` code for:
+-   `Wallet` (User, Currency, Balance).
+-   `Order` (User, Type [Buy/Sell], Amount, Rate, Status).
+-   `Transaction` (Buyer, Seller, Amount, Timestamp).
+
+**Step 2: The Matching Logic**
+Write a Python function (or Django Service) that handles the "Buy" logic. It must:
+-   Use `transaction.atomic()` to prevent race conditions.
+-   Check if the buyer has enough balance.
+-   Lock the specific Order row.
+-   Transfer funds between Buyer and Seller Wallets.
+
+**Step 3: Frontend Component Structure**
+Suggest a folder structure for the React app and write a basic TypeScript interface for the `Order` object.
+
+Please prioritize clean code and explain the "Race Condition" handling in the backend, as this is crucial for my thesis defense.
